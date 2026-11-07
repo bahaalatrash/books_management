@@ -77,6 +77,10 @@ class BooksController extends Controller
             $book->categories()->attach($request->categories);
         }
 
+        $book->cover()->create([
+            'color' => $request->color,
+            'format' => $request->format,
+        ]);
         return redirect()->route('books.index');
     }
 
@@ -88,9 +92,25 @@ class BooksController extends Controller
     public function updatee(UpdateBookRequest $request, int $id)
     {
 
-        Book::query()->where('id', $id)->update(
-            $request->validated()
+       Book::query()->where('id', $id)->update(
+            [
+                'title' => $request->title,
+                'author' => $request->author,
+                'publication_year' => $request->publication_year,
+            ]
         );
+
+        $book = Book::find($id);
+        $book->cover()->updateOrCreate(
+            [
+
+                'book_id' => $book->id,
+            ],
+        [
+            'color' => $request->color,
+            'format' => $request->format,
+        ]);
+
 
         return redirect()->route('books.index');
     }
