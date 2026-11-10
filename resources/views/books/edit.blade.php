@@ -42,34 +42,66 @@
                                 <label for="title" class="form-label fw-bold">title:</label>
                                 <input type="text" id="title" name="title" value="{{ $book->title }}"
                                     class="form-control">
+                                @error('title')
+                                    <div style="color: red;">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="author" class="form-label fw-bold">author:</label>
                                 <input type="text" id="author" name="author" value="{{ $book->author }}"
                                     class="form-control">
+
+                                @error('author')
+                                    <div style="color: red;">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-4">
                                 <label for="publication_year" class="form-label fw-bold">publication year :</label>
                                 <input type="number" id="publication_year" name="publication_year"
                                     value="{{ $book->publication_year }}" class="form-control">
+
+                                @error('publication_year')
+                                    <div style="color: red;">{{ $message }}</div>
+                                @enderror
                             </div>
+                            <div class="mb-4">
+                                <label for="is_available" class="form-label fw-bold">is available :</label>
+                                <input type="number" id="is_available" name="is_available"
+                                    value="{{ $book->is_available }}" class="form-control">
 
-
+                                @error('is_available')
+                                    <div style="color: red;">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <h3 class="mb-0 text-warning">Edit cover Details</h3><br>
 
 
                             <div class="mb-4">
+
+
                                 <label for="color" class="form-label fw-bold">cover color :</label>
                                 <input type="text" id="color" name="color" value="{{ $book->cover?->color }}"
                                     class="form-control">
+                                @error('color')
+                                    <div style="color: red;">{{ $message }}</div>
+                                @enderror
+
+
+
+
                             </div>
 
                             <div class="mb-4">
+
+
                                 <label for="format" class="form-label fw-bold"> cover format :</label>
                                 <input type="text" id="format" name="format" value="{{ $book->cover?->format }}"
                                     class="form-control">
+                                @error('format')
+                                    <div style="color: red;">{{ $message }}</div>
+                                @enderror
                             </div>
 
 

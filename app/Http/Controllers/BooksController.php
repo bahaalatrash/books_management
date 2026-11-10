@@ -6,133 +6,44 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use App\Models\Category;
+use App\services\BookService;
 
 class BooksController extends Controller
 {
 
-
+    public function __construct(protected BookService $bookService) {}
     public function index()
     {
-        $books = Book::query()->get();
+
+        $books =  $this->bookService->index();
         return $this->succes("all books in database", $books);
     }
 
     public function show(int $id)
     {
-        $book = Book::query()->where('id', $id)->get();
+        $book = $this->bookService->find($id);
         return $this->succes("the book that id $id is", $book);
     }
     public function store(StoreBookRequest $request)
     {
-        $book = Book::query()->create(
-            $request->validated()
-        );
+        $book = $this->bookService->store($request);
         return $this->succes("book created successfully", $book->toArray());
     }
     public function update(UpdateBookRequest $request, int $id)
     {
 
-        $book = Book::query()->where('id', $id)->update(
-            $request->validated()
-        );
+        $book = $this->bookService->update($request, $id);
 
-        return $this->succes("book updated successfully");
+        return $this->succes("book updated successfully", $book);
     }
 
 
     public function destroy(int $id)
     {
 
-        Book::query()->where('id', $id)->delete();
+        $this->bookService->destroy($id);
 
 
         return $this->succes("book deleted successfully");
-    }
-
-
-    //for views
-    public function indexx()
-    {
-        $books = Book::paginate(10);
-        return view('books.index', compact('books'));
-    }
-
-
-    public function create()
-    {
-        $categories = Category::all();
-        return view('books.create', compact('categories'));
-    }
-    public function storee(StoreBookRequest $request)
-    {
-        // Book::query()->create(
-        //     $request->validated()
-        // );
-        $book = Book::query()->create([
-            'title' => $request->title,
-            'author' => $request->author,
-            'publication_year' => $request->publication_year,
-        ]);
-        if ($request->has('categories')) {
-            $book->categories()->attach($request->categories);
-        }
-
-        $book->cover()->create([
-            'color' => $request->color,
-            'format' => $request->format,
-        ]);
-        return redirect()->route('books.index');
-    }
-
-    public function edit(int $id)
-    {
-        $book = Book::find($id);
-        return view('books.edit', compact('book'));
-    }
-    public function updatee(UpdateBookRequest $request, int $id)
-    {
-
-       Book::query()->where('id', $id)->update(
-            [
-                'title' => $request->title,
-                'author' => $request->author,
-                'publication_year' => $request->publication_year,
-            ]
-        );
-
-        $book = Book::find($id);
-        $book->cover()->updateOrCreate(
-            [
-
-                'book_id' => $book->id,
-            ],
-        [
-            'color' => $request->color,
-            'format' => $request->format,
-        ]);
-
-
-        return redirect()->route('books.index');
-    }
-
-
-    public function destroyy(int $id)
-    {
-
-        Book::find($id)->delete();
-
-        return redirect()->route('books.index');
-    }
-
-    public function showw(int $id)
-    {
-        // $book = Book::with('cover')->with('categories')->with('reviews')->where('id', $id)->get();
-        $book = Book::with(['cover', 'categories', 'reviews'])->findOrFail($id);
-        //    return response()->json([
-        //     "jkj"=>$book
-        //    ]);
-
-
-        return view('books.show', compact('book'));
     }
 }

@@ -48,23 +48,34 @@
                                 <div class="mb-3">
                                     <label for="title" class="form-label fw-bold">title:</label>
                                     <input type="text" id="title" name="title" class="form-control">
+                                    @error('title')
+                                        <div style="color: red;">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="author" class="form-label fw-bold">author:</label>
                                     <input type="text" id="author" name="author" class="form-control">
+                                    @error('author')
+                                        <div style="color: red;">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="publication_year" class="form-label fw-bold">publication year :</label>
                                     <input type="number" id="publication_year" name="publication_year"
                                         class="form-control">
+                                    @error('publication_year')
+                                        <div style="color: red;">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                
-                                  <div class="mb-3">
-                                    <label for="description" class="form-label fw-bold">description :</label>
-                                    <input type="text" id="description" name="description"
-                                        class="form-control">
+
+                                <div class="mb-3">
+                                    <label for="is_available" class="form-label fw-bold">is available :</label>
+                                    <input type="number" id="is_available" name="is_available" class="form-control">
+                                    @error('is_available')
+                                        <div style="color: red;">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-4">
@@ -84,17 +95,24 @@
                                 </div>
 
 
-                                <h3 class="mb-0 text-success">cover details,  optional</h3><br>
+                                <h3 class="mb-0 text-success">cover details, optional</h3><br>
 
 
                                 <div class="mb-4">
                                     <label for="color" class="form-label fw-bold">cover color :</label>
                                     <input type="text" id="color" name="color" class="form-control">
+
+                                    @error('color')
+                                        <div style="color: red;">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-4">
                                     <label for="format" class="form-label fw-bold"> cover format :</label>
                                     <input type="text" id="format" name="format" class="form-control">
+                                    @error('format')
+                                        <div style="color: red;">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
 

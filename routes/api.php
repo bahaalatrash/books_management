@@ -10,12 +10,12 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::prefix('books')->group(function () {
-    Route::get('/', [BooksController::class, 'index']);
-    Route::post('/', [BooksController::class, 'store']);
-    Route::get('/{id}', [BooksController::class, 'show']);
-    Route::put('/{id}', [BooksController::class, 'update']);
-    Route::delete('/{id}', [BooksController::class, 'destroy']);
+Route::prefix('books')->controller(App\Http\Controllers\BooksController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+    Route::get('/{id}', 'show');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
 
 });
 
